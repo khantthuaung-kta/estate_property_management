@@ -1,0 +1,27 @@
+<odoo>
+   <record model="ir.module.category" id="base.module_category_real_estate_brokerage">
+        <field name="description">Helps you handle your estate.</field>
+        <field name="sequence">7</field>
+    </record>
+
+    <record id="estate_group_user" model="res.groups">
+        <field name="name">Agent</field>
+        <field name="category_id" ref="base.module_category_real_estate_brokerage"/>
+    </record>
+
+    <record id="estate_group_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="base.module_category_real_estate_brokerage"/>
+        <field name="implied_ids" eval="[(4, ref('estate_group_user'))]"/>
+    </record>
+
+    <record id="property_agent_rule_id" model="ir.rule">
+        <field name="name">Properties Agent</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="domain_force">[
+            ('user_id', '=', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('estate_property_management.estate_group_user'))]"/>
+    </record>
+
+</odoo>
